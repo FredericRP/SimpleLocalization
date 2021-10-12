@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Unreleased
 
-### Fixed
+## [1.0.0] - 2021-10-12
 
 ### Added
 - First publish of this new package: a helper for designers in Unity
