@@ -43,8 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43316f8ed1f5b8c41bf190beb5b41ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LanguageUpdateEvent: {fileID: 11400000, guid: b2746908f51bd4e418672228bf348205,
+  LanguageUpdateEvent: {fileID: 11400000, guid: 066c5a68e3cedf5418abc2e45bd99bed,
     type: 2}
   fieldSeparator: 9
   defaultLanguage: 0
-  currentLanguageId: 0

@@ -12,7 +12,7 @@ namespace FredericRP.SimpleLocalization
     const string LANGUAGE_LIST = "sl-language-list";
 
     [SerializeField]
-    GameEvent LanguageUpdateEvent;
+    IntGameEvent LanguageUpdateEvent;
     [SerializeField]
     char fieldSeparator = '\t';
 
@@ -27,6 +27,7 @@ namespace FredericRP.SimpleLocalization
     private IDictionary<string, string> _localizedStrings = new Dictionary<string, string>();
 
     public static int CurrentLanguageId { get { return Instance.currentLanguageId; } }
+    public static string CurrentLanguageName { get { return Instance.currentLanguageName; } }
 
     private void Awake()
     {
@@ -63,7 +64,7 @@ namespace FredericRP.SimpleLocalization
       currentLanguageName = availableLanguageList[languageId];
       currentLanguageId = languageId;
       LoadLocalizedStrings();
-      LanguageUpdateEvent?.Raise<int>(languageId);
+      LanguageUpdateEvent?.Raise(languageId);
     }
 
     private void LoadLocalizedStrings()
