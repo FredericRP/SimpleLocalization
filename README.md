@@ -17,9 +17,9 @@ A simple tool to load localized resource and trigger event based on it.
 LocalizationManager.GetString("game.title");
 ```
 
-### Set language
+### Set language manually
 
-You can manually switch the used language (and loads it resource) by calling SetLanguage with the index matching the content of the "sl-language-list.txt" file located under the Resource folder.
+You can manually switch the used language (and loads it resource) by calling SetLanguage with the index matching the content of the "sl-language-list.txt" file located under the Resource folder, (yes, it is called "Simple" localization).
 
 ```C#
 LocalizationManager.SetLanguage(1);
@@ -28,7 +28,7 @@ LocalizationManager.SetLanguage(1);
 ### Be notified on language change
 
 Use the *LanguageUpdateEvent* game event to be notified when the language change. This event passes the language index to it.
-If you need the name of the current language, you can do so by calling CurrentLanguageName on the LocalizationManager.
+If you need the name of the current language, you can do so by calling *CurrentLanguageName* on the *LocalizationManager*.
 
 ## Demo
 
