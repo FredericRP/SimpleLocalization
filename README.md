@@ -1,5 +1,3 @@
-[![openupm](https://img.shields.io/npm/v/com.fredericrp.simplelocalization?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.fredericrp.simplelocalization/)
-
 # Simple Localization
 
 A simple tool for localization.

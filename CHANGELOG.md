@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Unreleased
 
+## [1.0.2] - 2023-12-02
+
+### Fixed
+- Load on Android and iOS without error
+
+### Added
+- Using SimpleDataLoader package
+- Ability to use DistanceStorage if package is present
+
 ## [1.0.1] - 2022-04-06
 
 ### Fixed

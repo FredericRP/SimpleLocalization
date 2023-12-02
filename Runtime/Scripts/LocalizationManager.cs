@@ -4,6 +4,13 @@ using System.IO;
 using FredericRP.EventManagement;
 using FredericRP.GenericSingleton;
 using FredericRP.StringDataList;
+#if FRP_DISTANT_STORAGE
+using FredericRP.DistantStorage;
+#endif
+#if FRP_SIMPLE_DATA
+//using Zenject;
+using FredericRP.SimpleDataLoading;
+#endif
 
 namespace FredericRP.SimpleLocalization
 {
@@ -15,6 +22,19 @@ namespace FredericRP.SimpleLocalization
     IntGameEvent LanguageUpdateEvent;
     [SerializeField]
     char fieldSeparator = '\t';
+    [SerializeField]
+    char commentChar = '#';
+    [SerializeField]
+    bool useComment = true;
+#if FRP_DISTANT_STORAGE
+    [SerializeField]
+    [Tooltip("Use {0} to include the two letters language in the distant name")]
+    string distantName = "messages - {0}.tsv";
+#endif
+    //#if FRP_SIMPLE_DATA
+    //[Inject]
+    //IDataLoader contentLoader;
+    //#endif
 
     [SerializeField]
     [Select(LANGUAGE_LIST)]
@@ -35,9 +55,20 @@ namespace FredericRP.SimpleLocalization
       InitLanguage();
     }
 
+    public void SetFieldSeparator(char newSeparator)
+    {
+      fieldSeparator = newSeparator;
+    }
+
+    public void SetComment(bool useComment, char commentChar = '#')
+    {
+      this.useComment = useComment;
+      this.commentChar = commentChar;
+    }
+
     protected void InitLanguage()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID || UNITY_IOS
       SystemLanguage currentSystemLangage = Application.systemLanguage;
 #elif UNITY_SWITCH && !UNITY_EDITOR
     SystemLanguage currentSystemLangage = SwitchLocalizationLanguage.GetSwitchSystemLanguage();
@@ -60,38 +91,66 @@ namespace FredericRP.SimpleLocalization
 
     public void SetLanguage(int languageId)
     {
-      Debug.Log("SetLanguage " + availableLanguageList[languageId]);
       currentLanguageName = availableLanguageList[languageId];
       currentLanguageId = languageId;
-      LoadLocalizedStrings();
+
+#if UNITY_EDITOR && DEBUG
+      Debug.Log($"load localization strings at : Localized/{currentLanguageName}/messages");
+#endif
+
+      string languageResourceFilename = $"Localized/{currentLanguageName}/messages";
+
+#if FRP_SIMPLE_DATA
+      string text = new TextResourceLoader().GetContent(languageResourceFilename); // contentLoader
+#else
+      string text = (Resources.Load(languageResourceFilename) as TextAsset)?.text;
+#endif
+      if (text != null)
+        LoadLocalizedStrings(text);
+#if UNITY_EDITOR && DEBUG
+      else
+        Debug.Log("Could not load data.");
+#endif
+#if FRP_DISTANT_STORAGE
+      // Try to use distant file
+      var distantStorage = DistantStorageManager.Instance;
+        if (distantStorage != null)
+        {
+          string fileContent = await distantStorage.LoadFile(string.Format(distantName, currentLanguageName));
+          if (fileContent != null)
+            LoadLocalizedStrings(fileContent);
+        }
+#endif
       LanguageUpdateEvent?.Raise(languageId);
     }
 
-    private void LoadLocalizedStrings()
+    private void LoadLocalizedStrings(string fileContent)
     {
-#if UNITY_EDITOR
-      Debug.Log("load localization strings at : " + "Localized/" + currentLanguageName + "/messages");
-#endif
-      string text = (Resources.Load("Localized/" + currentLanguageName + "/messages") as TextAsset).text;
 
       _localizedStrings.Clear();
-      using (StringReader reader = new StringReader(text))
+      using (StringReader reader = new StringReader(fileContent))
       {
         int lineNumber = 0;
         string line;
         while ((line = reader.ReadLine()) != null)
         {
           ++lineNumber;
-          int commentPos = line.IndexOf('#');
-          if (commentPos != -1) line = line.Substring(0, commentPos);
-          if (line.Length == 0) continue;
+          if (useComment)
+          {
+            int commentPos = line.IndexOf(commentChar);
+            if (commentPos != -1)
+              line = line.Substring(0, commentPos);
+          }
+          if (line.Length == 0)
+            continue;
           string[] words = line.Split(new char[] { fieldSeparator });
           if (words.Length != 1 && words.Length != 2)
           {
             //Debug.Log("Error in column count line " + lineNumber);
             //error number of columns
           }
-          if ((byte)(line[0]) == 255) continue;
+          if ((byte)(line[0]) == 255)
+            continue;
           string id = words[0];
           if (!_localizedStrings.ContainsKey(id))
           {

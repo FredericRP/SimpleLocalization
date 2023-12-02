@@ -4,15 +4,22 @@
     "references": [
         "FredericRP.Singleton.Runtime",
         "FredericRP.GameEventHandler.Runtime",
-        "FredericRP.StringDataList.Runtime"
+        "FredericRP.StringDataList.Runtime",
+        "FredericRP.SimpleDataLoader.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
+    "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.fredericrp.simpledataloader",
+            "expression": "1",
+            "define": "FRP_SIMPLE_DATA"
+        }
+    ],
     "noEngineReferences": false
 }
