@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Unreleased
 
+## [1.0.3] - 2026-10-26
+
+### Fixed
+- Compile on every platform (WebGL, consoles...): system language now defaults to Application.systemLanguage
+
 ## [1.0.2] - 2023-12-02
 
 ### Fixed
