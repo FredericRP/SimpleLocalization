@@ -68,10 +68,10 @@ namespace FredericRP.SimpleLocalization
 
     protected void InitLanguage()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID || UNITY_IOS
+#if UNITY_SWITCH && !UNITY_EDITOR
+      SystemLanguage currentSystemLangage = SwitchLocalizationLanguage.GetSwitchSystemLanguage();
+#else
       SystemLanguage currentSystemLangage = Application.systemLanguage;
-#elif UNITY_SWITCH && !UNITY_EDITOR
-    SystemLanguage currentSystemLangage = SwitchLocalizationLanguage.GetSwitchSystemLanguage();
 #endif
       // Use lower string format
       string requestedLanguage = currentSystemLangage.ToString().ToLower();
