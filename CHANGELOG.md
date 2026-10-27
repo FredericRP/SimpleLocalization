@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Unreleased
 
+## [1.0.4] - 2026-10-27
+
+### Fixed
+- SimpleDataLoader is now an optional dependency (used only when present), so the package installs from OpenUPM
+
 ## [1.0.3] - 2026-10-26
 
 ### Fixed
