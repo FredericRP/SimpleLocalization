@@ -91,6 +91,13 @@ namespace FredericRP.SimpleLocalization
 
     public void SetLanguage(int languageId)
     {
+      // Fall back to the first language when the id does not exist in the language list
+      // (e.g. a default language set for a longer list than the one used by the project).
+      if (languageId < 0 || languageId >= availableLanguageList.Count)
+      {
+        Debug.LogWarning($"Language id {languageId} not found in {LANGUAGE_LIST}, using the first language instead.");
+        languageId = 0;
+      }
       currentLanguageName = availableLanguageList[languageId];
       currentLanguageId = languageId;
 

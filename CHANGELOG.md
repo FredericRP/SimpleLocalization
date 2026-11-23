@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Unreleased
 
+## [1.0.5] - 2026-11-23
+
+### Fixed
+- Fall back to the first language when the default language id is out of the language list range (localization keys were shown instead of texts)
+
 ## [1.0.4] - 2026-10-27
 
 ### Fixed
