@@ -1,6 +1,6 @@
 {
     "name": "com.fredericrp.simplelocalization",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "displayName": "FRP Simple Localization",
     "description": "A minimum tool for localization.",
     "unity": "2020.1",
